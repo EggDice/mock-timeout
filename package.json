@@ -7,5 +7,8 @@
     "test": "tap ./test"
   },
   "author": "Tamas Kokeny <tamas.kokeny.87@gmail.com> @eggdice",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tap": "^0.4.9"
+  }
 }
