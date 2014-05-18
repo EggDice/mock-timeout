@@ -1,0 +1,11 @@
+{
+  "name": "mockTimeout",
+  "version": "0.0.0",
+  "description": "setTimeout and setInterval mock",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap ./test"
+  },
+  "author": "Tamas Kokeny <tamas.kokeny.87@gmail.com> @eggdice",
+  "license": "MIT"
+}
