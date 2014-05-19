@@ -8,6 +8,11 @@ function createClock() {
   var callbackNum = 0;
 
   return Object.freeze({
+    reset: function() {
+      clock = 0;
+      savedCallbacks = {};
+      callbackNum = 0;
+    },
     setTimeout: function(cb, delay) {
       savedCallbacks[callbackNum++] = {
         callback: cb,
