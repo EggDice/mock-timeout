@@ -9,6 +9,10 @@
   "author": "Tamas Kokeny <tamas.kokeny.87@gmail.com> @eggdice",
   "license": "MIT",
   "devDependencies": {
-    "tap": "^0.4.9"
+    "tap": "^0.4.9",
+    "tape": "^2.13.1"
+  },
+  "dependencies": {
+    "lodash": "^2.4.1"
   }
 }
