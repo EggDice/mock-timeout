@@ -17,7 +17,7 @@ Clears all callbacks and resets the clock to 0.
 ## Usage
 
 ```js
-var mockTimeout = require('mockTimeout');
+var mockTimeout = require('mock-timeout');
 
 mockTimeout.setTimeout(function() {
   console.log('apple');    
@@ -38,6 +38,9 @@ mockTimeout.clearInterval(intervalId);
 
 mockTimeout.tick(100); //
 ```
+
+## Install
+`npm install mock-timeout`
 
 ## License
 MIT
