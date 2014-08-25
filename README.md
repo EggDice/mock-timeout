@@ -3,6 +3,8 @@
 Based on jasmine's `jasmine.clock()` mock of `setTimeout`, `setInterval`,
 `clearTimeout`, and `clearInterval` functions.
 
+[![Build Status](https://travis-ci.org/EggDice/mock-timeout.svg)](https://travis-ci.org/EggDice/mock-timeout)
+
 ## Methods
 
 ### tick(number)
