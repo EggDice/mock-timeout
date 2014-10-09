@@ -25,8 +25,8 @@ function methodExist(t, name) {
 
 test('mockTimeout', function(t) {
   [
-    'setTimeout', 'setInterval', 'tick', 'reset',
-    'clearTimeout', 'clearInterval'
+    'setTimeout', 'setInterval', 'tick', 'tickOnDateCall', 'reset',
+    'clearTimeout', 'clearInterval', 'Date'
   ].forEach(_.partial(methodExist, t));
   t.ok(Object.isFrozen(mockTimeout), 'mockTimeout should be frozen');
 
@@ -89,6 +89,47 @@ test('mockTimeout', function(t) {
     mockTimeout.tick(20);
     t.end();
   });
+
+  test('Date', function(t) {
+    t.ok(new mockTimeout.Date() instanceof Date, 'should create a date object');
+
+    mockTimeout.reset();
+    t.equal((new mockTimeout.Date()).getTime(), 0, 'should mock the time to 0');
+
+    mockTimeout.reset();
+    mockTimeout.tick(10);
+    t.equal((new mockTimeout.Date()).getTime(), 10);
+
+    mockTimeout.reset(12345);
+    t.equal((new mockTimeout.Date()).getTime(), 12345);
+
+    mockTimeout.reset(12345);
+    mockTimeout.setTimeout(genAssertCalled(t, false), 20);
+    mockTimeout.tick(10);
+    t.equal((new mockTimeout.Date()).getTime(), 12355);
+
+    t.end();
+  });
+
+  test('tickOnDateCall', function(t) {
+    mockTimeout.reset();
+    mockTimeout.tickOnDateCall(10);
+    t.equal((new mockTimeout.Date()).getTime(), 10);
+
+    mockTimeout.reset();
+    mockTimeout.tickOnDateCall(10);
+    mockTimeout.tickOnDateCall(20);
+    t.equal((new mockTimeout.Date()).getTime(), 10);
+    t.equal((new mockTimeout.Date()).getTime(), 30);
+
+    mockTimeout.reset();
+    mockTimeout.tickOnDateCall([10, 20]);
+    t.equal((new mockTimeout.Date()).getTime(), 10);
+    t.equal((new mockTimeout.Date()).getTime(), 30);
+
+    t.end();
+  });
+
   t.end();
 });
 

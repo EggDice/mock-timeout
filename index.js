@@ -4,21 +4,22 @@ var _ = require('lodash');
 
 function createMock() {
   var clock, savedCallbacks, callbackNum;
+  var ticksOnCall = [];
 
   function removeCallback(id) {
     delete savedCallbacks[id];
   }
 
-  function reset() {
-    clock = 0;
+  function reset(baseTime) {
+    clock = baseTime || 0;
     savedCallbacks = {};
     callbackNum = 0;
   }
 
-  function addCallback(isLooping) {
+  function addCallback(options) {
     return function(cb, delay) {
       savedCallbacks[callbackNum] = {
-        isLooping: isLooping,
+        isLooping: options.isLooping,
         fn: cb,
         startTime: clock,
         delay: delay
@@ -69,15 +70,32 @@ function createMock() {
     return interval.to - interval.from;
   }
 
+  function MockDate() {
+    if (ticksOnCall.length) {
+      tick(ticksOnCall.shift());
+    } 
+    return new Date(clock); 
+  }
+
+  function tickOnDateCall(passedTime) {
+    if (_.isArray(passedTime)) {
+      ticksOnCall = ticksOnCall.concat(passedTime);
+    } else {
+      ticksOnCall.push(passedTime);
+    }
+  }
+
   reset();
 
   return Object.freeze({
     reset: reset,
-    setTimeout: addCallback(false),
+    setTimeout: addCallback({isLooping: false}),
     clearTimeout: removeCallback,
-    setInterval: addCallback(true),
+    setInterval: addCallback({isLooping: true}),
     clearInterval: removeCallback,
-    tick: tick
+    tick: tick,
+    tickOnDateCall: tickOnDateCall,
+    Date: MockDate
   });
 }
 
